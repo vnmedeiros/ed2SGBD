@@ -1,3 +1,7 @@
+import java.util.ArrayList;
+
+import fileManager.FileFetch;
+
 
 public class Sgbd {
 
@@ -5,7 +9,8 @@ public class Sgbd {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+		ArrayList<String> dbs= FileFetch.getDBs();
+		System.out.println(dbs.size());
 
 	}
 
