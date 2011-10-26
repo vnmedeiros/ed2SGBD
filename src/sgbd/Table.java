@@ -12,6 +12,7 @@ public class Table {
 	private int qtdAtributes;
 	private int qtdTuples;
 	
+	//---------------------GETTER E SETTERS-----------------------------
 	public String getName() {
 		return name;
 	}
@@ -51,7 +52,8 @@ public class Table {
 	public void setQtdTuples(int qtdTuples) {
 		this.qtdTuples = qtdTuples;
 	}
-
+	//------------------------------------------------------------------
+	
 	public Table(String name){
 		this.name=name;
 		ArrayList<String> temp = FileFetch.getTableMD(name);
