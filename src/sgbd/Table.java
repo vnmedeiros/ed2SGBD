@@ -6,12 +6,52 @@ import java.util.StringTokenizer;
 import fileManager.FileFetch;
 
 public class Table {
-	public String name;
-	public ArrayList<Atribute> atributes= new ArrayList<Atribute>();
-	public ArrayList<String[]> datas;
-	public int qtdAtributes;
-	public int qtdTuples;
+	private String name;
+	private ArrayList<Atribute> atributes= new ArrayList<Atribute>();
+	private ArrayList<String[]> datas;
+	private int qtdAtributes;
+	private int qtdTuples;
 	
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public ArrayList<Atribute> getAtributes() {
+		return atributes;
+	}
+
+	public void setAtributes(ArrayList<Atribute> atributes) {
+		this.atributes = atributes;
+	}
+
+	public ArrayList<String[]> getDatas() {
+		return datas;
+	}
+
+	public void setDatas(ArrayList<String[]> datas) {
+		this.datas = datas;
+	}
+
+	public int getQtdAtributes() {
+		return qtdAtributes;
+	}
+
+	public void setQtdAtributes(int qtdAtributes) {
+		this.qtdAtributes = qtdAtributes;
+	}
+
+	public int getQtdTuples() {
+		return qtdTuples;
+	}
+
+	public void setQtdTuples(int qtdTuples) {
+		this.qtdTuples = qtdTuples;
+	}
+
 	public Table(String name){
 		this.name=name;
 		ArrayList<String> temp = FileFetch.getTableMD(name);

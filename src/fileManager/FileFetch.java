@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import sgbd.Atribute;
-import sgbd.BD;
+import sgbd.DB;
 import sgbd.Table;
 
 public class FileFetch {
@@ -34,20 +34,20 @@ public class FileFetch {
 		
 	}
 	
-	public static BD getDB(String name){
+	public static DB getDB(String name){
 		FileReader file;
-		BD bd = new BD();
+		DB bd = new DB();
 		
 		
 		try{
 			file = new FileReader(name);
 			Scanner sc = new Scanner(file);
-			bd.name=name;
+			bd.setName(name);
 			String nameTb;
 			
 			while(sc.hasNext()){
 				nameTb=sc.nextLine();
-				bd.tables.add(new Table(nameTb));
+				bd.getTables().add(new Table(nameTb));
 			}
 			
 			
@@ -106,19 +106,19 @@ public class FileFetch {
 		FileWriter file;
 		
 		try{
-			file= new FileWriter(tb.name+".mdt");
+			file= new FileWriter(tb.getName()+".mdt");
 			PrintWriter fileP = new PrintWriter(file);
-			ArrayList<Atribute> atributes=tb.atributes;
+			ArrayList<Atribute> atributes=tb.getAtributes();
 			
 			for(Atribute it: atributes){
-				fileP.write(it.name+":"+it.type+"\n");
+				fileP.write(it.getName()+":"+it.getType()+"\n");
 			}
 			fileP.close();
 			
-			file= new FileWriter(tb.name+".dt");
+			file= new FileWriter(tb.getName()+".dt");
 			fileP = new PrintWriter(file);
 			
-			ArrayList<String[]> datas=tb.datas;
+			ArrayList<String[]> datas=tb.getDatas();
 			
 			for(String[] tuple : datas){
 				for (int i=0;i<tuple.length-1;i++){
