@@ -1,11 +1,11 @@
 package fileManager;
 
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.StringTokenizer;
 
 import sgbd.Atribute;
 import sgbd.DB;
@@ -58,46 +58,48 @@ public class FileFetch {
 		return bd;
 	}
 	
-	public static ArrayList<String> getTableMD(String name){
-		ArrayList<String> md = new ArrayList<String>();
+	public static ArrayList<Atribute> getTableMD(String name){
+		ArrayList<Atribute> atributes = new ArrayList<Atribute>();
 		FileReader file;
-		
 		
 		try{
 			file = new FileReader(name+".mdt");
 			Scanner sc = new Scanner(file);
 			
 			while(sc.hasNext()){
-				md.add(sc.nextLine());
-			}
-			
+				String str = sc.nextLine();
+				StringTokenizer stk = new StringTokenizer(str,":");
+				String nameAtr=stk.nextToken();
+				String typeAtr=stk.nextToken();				
+				atributes.add(new Atribute(nameAtr, typeAtr));
+			}			
 		}catch(Exception e){
 			
-		}
-		
-		
-		return md;
+		}		
+		return atributes;
 	}
 	
-	public static ArrayList<String> getTableDatas(String name){
-		ArrayList<String> datas= new ArrayList<String>();
+	public static ArrayList<ArrayList<String>> getTableDatas(String name){
+		ArrayList<ArrayList<String>> datas= new ArrayList<ArrayList<String>>();
+		ArrayList<String> line;
 		
         FileReader file;
-		
 		
 		try{
 			file = new FileReader(name+".dt");
 			Scanner sc = new Scanner(file);
 			
 			while(sc.hasNext()){
-				datas.add(sc.nextLine());
+				line = new ArrayList<String>();
+				String str = sc.nextLine();
+				StringTokenizer stk = new StringTokenizer(str,"#\n");
+				while(stk.hasMoreTokens())
+					line.add(stk.nextToken());
+				datas.add(line);
 			}
-			
 		}catch(Exception e){
 			
 		}
-		
-		
 		return datas;
 	}
 	
@@ -118,17 +120,15 @@ public class FileFetch {
 			file= new FileWriter(tb.getName()+".dt");
 			fileP = new PrintWriter(file);
 			
-			ArrayList<String[]> datas=tb.getDatas();
+			ArrayList<ArrayList<String>> datas=tb.getDatas();
 			
-			for(String[] tuple : datas){
-				for (int i=0;i<tuple.length-1;i++){
-					fileP.write(tuple[i]+"#");
+			for(ArrayList<String> line : datas){
+				for (int i=0;i<tb.getQtdAtributes()-1;i++){
+					fileP.write(line.get(i)+"#");
 				}
-				fileP.write(tuple[tuple.length-1]+"\n");
+				fileP.write(line.get(tb.getQtdAtributes()-1)+"\n");
 			}
 			fileP.close();
-			
-			
 			
 		}catch(Exception e){
 			

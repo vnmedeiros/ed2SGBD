@@ -4,11 +4,12 @@ import java.util.ArrayList;
 import java.util.StringTokenizer;
 
 import fileManager.FileFetch;
+import algorithms.*;
 
 public class Table {
 	private String name;
-	private ArrayList<Atribute> atributes= new ArrayList<Atribute>();
-	private ArrayList<String[]> datas;
+	private ArrayList<Atribute> atributes;
+	private ArrayList<ArrayList<String>> datas;
 	private int qtdAtributes;
 	private int qtdTuples;
 	
@@ -29,11 +30,11 @@ public class Table {
 		this.atributes = atributes;
 	}
 
-	public ArrayList<String[]> getDatas() {
+	public ArrayList<ArrayList<String>> getDatas() {
 		return datas;
 	}
 
-	public void setDatas(ArrayList<String[]> datas) {
+	public void setDatas(ArrayList<ArrayList<String>> datas) {
 		this.datas = datas;
 	}
 
@@ -56,45 +57,31 @@ public class Table {
 	
 	public Table(String name){
 		this.name=name;
-		ArrayList<String> temp = FileFetch.getTableMD(name);
-		qtdAtributes=temp.size();
-		datas = new ArrayList<String[]>();
-		
-		
-		for(String str: temp){
-			StringTokenizer stk = new StringTokenizer(str,":");
-			String nameAtr=stk.nextToken();
-			String typeAtr=stk.nextToken();
-
-			atributes.add(new Atribute(nameAtr,typeAtr));
-		}
-		
-		temp=FileFetch.getTableDatas(name);
-		qtdTuples = temp.size();	
-		for(String str: temp){
-			StringTokenizer stk = new StringTokenizer(str,"#\n");			
-			String strTemp[]=new String[qtdAtributes];
-			for(int i=0;i<qtdAtributes;i++){
-				strTemp[i]=stk.nextToken();				
-			}
-			datas.add(strTemp);
-		}
+		this.atributes=new ArrayList<Atribute>();
+		this.datas=new ArrayList<ArrayList<String>>();
+		this.loadTable();
 	}
 	
 	public Table(String name, ArrayList<Atribute> atributes){
 		this.name=name;
-		this.datas=new ArrayList<String[]>();
+		this.datas=new ArrayList<ArrayList<String>>();
 		this.atributes=atributes;
-		this.qtdTuples=0;
-		
+		this.qtdTuples=0;		
 	}
 	
-	public boolean insertTuple(String[] datas){
-		this.datas.add(datas);
+	private void loadTable(){
+		this.atributes = FileFetch.getTableMD(name);
+		this.qtdAtributes=this.atributes.size();		
+		
+		this.datas=FileFetch.getTableDatas(name);
+		this.qtdTuples = datas.size();
+	}
+	
+	public boolean insertTuple(ArrayList<String> line){
+		this.datas.add(line);
 		qtdTuples++;
 		return true;
-	}
-	
+	}	
 	
 	public boolean  alterTable(){
 		
@@ -102,11 +89,7 @@ public class Table {
 	}
 	
 	private void removeCollumn(String collumName){
-		
-		
-		
-		
-		
+				
 	}
 	
 	private void insertCollumn(){
@@ -117,19 +100,9 @@ public class Table {
 		
 		
 	}
-	
-	
-	
 	@Override
 	public String toString() {
-		String result="";
-		for(String[] tupla: datas){
-			for(String atributo:tupla){
-				result+=atributo+" ";
-			}
-			result+="\n";				
-		}			
+		String result="";				
 		return result;
 	}
-
 }

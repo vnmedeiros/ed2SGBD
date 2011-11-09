@@ -2,15 +2,19 @@ package algorithms;
 
 import java.util.ArrayList;
 
-public class SearchAlgorithms {
+public class SearchAlgorithms<T>{
 	
-	public int linearSearch(ArrayList<Comparable> array,Comparable obj){
+	public int linearSearch(ArrayList<T> array,T obj){
 		
 		int index=0;
+		Comparable objComp =(Comparable)obj;
 		
-		for(Comparable it:array)	
-		if(obj.compareTo(it)==0) return index;
-		else index++;
+		for(Object it:array){
+			Comparable itComp =(Comparable)it;
+				
+		   if(objComp.compareTo(it)==0) return index;
+		      else index++;
+}
 				
 		return -1;
 	}
