@@ -95,6 +95,31 @@ public class Table {
 		return true;
 	}
 	
+	
+	public boolean  alterTable(){
+		
+		return true;
+	}
+	
+	private void removeCollumn(String collumName){
+		
+		
+		
+		
+		
+	}
+	
+	private void insertCollumn(){
+		
+	}
+	
+	private void alterType(){
+		
+		
+	}
+	
+	
+	
 	@Override
 	public String toString() {
 		String result="";

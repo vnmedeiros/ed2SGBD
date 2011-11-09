@@ -1,6 +1,6 @@
 package sgbd;
 
-public class Atribute {
+public class Atribute implements Comparable {
 	private String name;
 	private String type;
 
@@ -23,5 +23,14 @@ public class Atribute {
 	public Atribute(String name,String type){
 		this.name=name;
 		this.type=type;
+	}
+
+	@Override
+	public int compareTo(Object arg) {
+		
+		Atribute argAtr=(Atribute)arg;
+		
+		return (this.name.compareTo(argAtr.name));
+		
 	}
 }
